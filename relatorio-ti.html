@@ -7,60 +7,294 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        /* Adicionado para rolagem suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
+            background: linear-gradient(135deg, #e0f2f7 0%, #e8f5e9 100%); /* Soft, fresh gradient background */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0.5rem; /* Reduzido o padding padrão para telas menores */
+            line-height: 1.6;
+            color: #334155; /* Darker slate for body text */
         }
+
+        /* Aumenta o padding para telas maiores */
+        @media (min-width: 640px) { /* Tailwind's 'sm' breakpoint */
+            body {
+                padding: 2.5rem;
+            }
+        }
+
         .report-container {
             background-color: #ffffff;
-            border-radius: 16px; /* More rounded corners */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 900px; /* Increased max-width for better readability */
+            border-radius: 24px; /* Even more rounded for a soft look */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); /* Deeper shadow for pop effect */
+            max-width: 1000px; /* Wider for a more expansive feel */
             width: 100%;
             overflow: hidden;
-            border: 1px solid #e2e8f0; /* Light border */
+            border: 1px solid #f1f5f9; /* Very light border */
+            animation: fadeIn 1s ease-out; /* Fade in animation for the whole container */
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .header-section {
-            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); /* Purple gradient */
+            background: linear-gradient(45deg, #6366f1 0%, #8b5cf6 100%); /* Vibrant purple-blue gradient */
             color: #ffffff;
-            padding: 2.5rem 2rem; /* Increased padding */
+            padding: 4rem 2.5rem; /* More generous padding */
             text-align: center;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 0% 0%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            animation: headerWave 10s infinite linear; /* Subtle wave animation */
+        }
+        @keyframes headerWave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .header-section h1 {
+            font-family: 'Poppins', sans-serif; /* Poppins for headings */
+            font-size: 4.2rem; /* Even larger title */
+            font-weight: 800; /* Extra bold */
+            margin-bottom: 1rem;
+            letter-spacing: -0.07em; /* Tighter letter spacing for impact */
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3); /* Stronger text shadow */
+        }
+        .header-section p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem; /* Larger subtitle */
+            font-weight: 300;
+            opacity: 0.95;
         }
         .content-section {
-            padding: 2.5rem; /* Increased padding */
+            padding: 1rem; /* Reduzido o padding para telas menores */
+        }
+        /* Aumenta o padding da seção de conteúdo para telas maiores */
+        @media (min-width: 640px) {
+            .content-section {
+                padding: 3.5rem;
+            }
+        }
+        .intro-text {
+            font-size: 1.25rem; /* Larger intro text */
+            color: #475569; /* Slate gray for good contrast */
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid for cards */
+            gap: 2.5rem; /* More space between grid items */
         }
         .service-card {
-            background-color: #f8fafc; /* Lighter background for cards */
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem; /* Padding padrão para o card */
             border: 1px solid #e2e8f0;
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Softer, wider shadow */
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column; /* Always stack icon and text vertically */
+            align-items: flex-start; /* Align contents (icon, h2, p) to the left within the card */
+            text-align: left;       /* Align text within h2 and p to the left */
+        }
+        /* Ajuste o padding do service-card para telas muito pequenas */
+        @media (max-width: 400px) {
+            .service-card {
+                padding: 1.5rem 1rem; /* Reduz o padding horizontal para 1rem (16px) */
+            }
+        }
+        /* Ajuste ainda mais fino para telas extremamente pequenas */
+        @media (max-width: 320px) {
+            .service-card {
+                padding: 1rem 0.75rem; /* Reduz ainda mais o padding horizontal */
+            }
+            .service-card h2 {
+                font-size: 1.8rem; /* Reduz um pouco o tamanho do título em telas muito pequenas */
+            }
+            .service-card p {
+                font-size: 1rem; /* Reduz um pouco o tamanho do parágrafo em telas muito pequenas */
+            }
+        }
+
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px; /* Accent line at the top */
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transform: translateY(-1px); /* Slightly outside */
         }
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-15px) rotateZ(1deg); /* Lift and slight rotation on hover */
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+        }
+        .service-card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem; /* Larger service title */
+            font-weight: 700;
+            color: #1e293b; /* Darker text for titles */
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .service-card p {
+            font-size: 1.1rem; /* Slightly larger paragraph text */
+            color: #475569;
+            line-height: 1.7;
+        }
+        .icon-container {
+            flex-shrink: 0;
+            margin-bottom: 1.5rem;
+            width: 80px; /* Larger icon container */
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #c7d2fe 0%, #a78bfa 100%); /* Soft gradient for icon background */
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.4s ease-in-out;
+        }
+        .service-card:hover .icon-container {
+            transform: scale(1.05); /* Slight scale on hover */
+            background: linear-gradient(45deg, #8b5cf6 0%, #6366f1 100%); /* Inverted gradient on hover */
         }
         .icon {
-            font-size: 2rem;
-            color: #4f46e5; /* Purple icon color */
-            margin-bottom: 1rem;
+            font-size: 3rem; /* Larger icons */
+            color: #ffffff; /* White icon color for contrast */
+            /* Ajustado para rotação 3D mais lenta */
+            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s ease-in-out;
         }
+        .service-card:hover .icon {
+            transform: rotateY(360deg); /* 3D flip effect on hover */
+            color: #ffffff;
+        }
+
         .footer-section {
-            background-color: #f0f4f8;
-            padding: 1.5rem 2.5rem;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
+            background-color: #f1f5f9; /* Light gray for footer */
+            padding: 2.5rem 3.5rem;
+            border-bottom-left-radius: 22px;
+            border-bottom-right-radius: 22px;
             text-align: center;
-            color: #64748b; /* Slate gray text */
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .footer-section p {
+            margin-bottom: 0.75rem;
+        }
+        .footer-section .font-bold {
+            color: #334155;
+        }
+
+        /* Classes para o efeito Fade In/Blur */
+        .fade-blur-effect {
+            opacity: 0;
+            filter: blur(5px);
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, filter 1s ease-out, transform 1s ease-out;
+        }
+        .fade-blur-effect.active {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+
+        /* Modal Styling (mantido, mas não acessível sem o botão) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal-overlay.show .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .modal-close-button:hover {
+            color: #1e293b;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #6366f1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+            display: none; /* Hidden by default */
+        }
+        .loading-spinner.show {
+            display: block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
     <!-- Font Awesome for icons -->
@@ -70,75 +304,200 @@
     <div class="report-container">
         <!-- Header Section -->
         <div class="header-section">
-            <h1 class="text-4xl font-extrabold mb-2">Relatório de Serviços de TI Executados</h1>
-            <p class="text-xl font-light">Youssef & Omena Advogados</p>
-            <p class="text-sm mt-1">Data: 22 de julho de 2025</p>
+            <h1 class="font-extrabold mb-2">Relatório de Serviços de TI</h1>
+            <p class="font-light">Youssef & Omena Advogados</p>
+            <p class="text-sm mt-1 opacity-90">Data: 22 de julho de 2025</p>
         </div>
 
         <!-- Content Section -->
         <div class="content-section">
-            <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+            <p class="intro-text fade-blur-effect">
                 Prezado(a) Dr. Ricardo Omena de Oliveira,
                 <br><br>
-                Para garantir a segurança e a integridade dos seus dados e sistemas, realizamos os seguintes serviços de TI em sua infraestrutura. Entenda a importância de cada um para a segurança do seu escritório:
+                Em um mundo digital em constante evolução, a segurança e a eficiência dos seus sistemas são a nossa prioridade. Realizamos os seguintes serviços de TI essenciais para garantir a proteção e o profissionalismo do seu escritório. Entenda o impacto de cada um:
             </p>
 
-            <!-- Service Card 1: Password Reset -->
-            <div class="service-card flex flex-col md:flex-row items-start md:items-center">
-                <div class="icon mr-0 md:mr-6 mb-4 md:mb-0"><i class="fas fa-key"></i></div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Redefinição de Senha do Administrador do Servidor</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        <strong>Por que é crucial?</strong> É como trocar as fechaduras regularmente! Essa medida impede que acessos antigos ou comprometidos sejam usados para invadir seu sistema, protegendo o servidor e todos os arquivos confidenciais contra acessos não autorizados.
-                    </p>
+            <div class="service-grid">
+                <!-- Service Card 1: Password Reset -->
+                <div class="service-card fade-blur-effect">
+                    <div class="icon-container">
+                        <i class="fas fa-key icon"></i>
+                    </div>
+                    <div>
+                        <h2>Redefinição de Senha do Administrador do Servidor</h2>
+                        <p id="desc-password-reset">
+                            <strong>Sua segurança em primeiro lugar!</strong> Esta ação é como trocar as fechaduras do seu escritório digital regularmente. Impede acessos antigos ou não autorizados, protegendo o servidor e todos os seus arquivos confidenciais.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Service Card 2: Threat Scan -->
+                <div class="service-card fade-blur-effect">
+                    <div class="icon-container">
+                        <i class="fas fa-shield-alt icon"></i>
+                    </div>
+                    <div>
+                        <h2>Varredura Abrangente de Ameaças</h2>
+                        <p id="desc-threat-scan">
+                            <strong>Vigilância 24/7!</strong> Realizamos uma varredura completa para identificar e neutralizar vírus, tentativas de phishing e outras ameaças maliciosas. Sua rede e dados permanecem limpos e seguros.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Service Card 3: Folder Sharing Verification -->
+                <div class="service-card fade-blur-effect">
+                    <div class="icon-container">
+                        <i class="fas fa-folder-open icon"></i>
+                    </div>
+                    <div>
+                        <h2>Verificação Manual de Compartilhamento de Pastas</h2>
+                        <p id="desc-folder-sharing">
+                            <strong>Acesso controlado e seguro!</strong> Verificamos cada pasta compartilhada para garantir que apenas pessoas autorizadas tenham acesso. Isso minimiza drasticamente o risco de vazamento de dados e invasões.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Service Card 4: Workstation Cleaning -->
+                <div class="service-card fade-blur-effect">
+                    <div class="icon-container">
+                        <i class="fas fa-desktop icon"></i>
+                    </div>
+                    <div>
+                        <h2>Limpeza e Verificação de Segurança em Estações de Trabalho</h2>
+                        <p id="desc-workstation-cleaning">
+                            <strong>Seus equipamentos sempre otimizados!</strong> Cada computador passou por uma limpeza e verificação rigorosa para garantir que estejam livres de softwares indesejados e configurados para máxima proteção e desempenho.
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Service Card 2: Threat Scan -->
-            <div class="service-card flex flex-col md:flex-row items-start md:items-center">
-                <div class="icon mr-0 md:mr-6 mb-4 md:mb-0"><i class="fas fa-shield-alt"></i></div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Varredura Abrangente de Ameaças</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        <strong>Por que é crucial?</strong> Funciona como um sistema de vigilância constante! Uma varredura completa identifica e neutraliza vírus, tentativas de phishing e outras atividades maliciosas antes que causem danos, mantendo a segurança da rede e dos seus dados.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Service Card 3: Folder Sharing Verification -->
-            <div class="service-card flex flex-col md:flex-row items-start md:items-center">
-                <div class="icon mr-0 md:mr-6 mb-4 md:mb-0"><i class="fas fa-folder-open"></i></div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Verificação Manual de Compartilhamento de Pastas</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        <strong>Por que é crucial?</strong> Garante que cada "porta" para seus arquivos esteja bem fechada! Verificamos manualmente cada compartilhamento para assegurar que apenas pessoas autorizadas tenham acesso aos arquivos corretos, minimizando drasticamente o risco de invasões e vazamento de dados confidenciais.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Service Card 4: Workstation Cleaning -->
-            <div class="service-card flex flex-col md:flex-row items-start md:items-center">
-                <div class="icon mr-0 md:mr-6 mb-4 md:mb-0"><i class="fas fa-desktop"></i></div>
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Limpeza e Verificação de Segurança em Estações de Trabalho</h2>
-                    <p class="text-gray-700 leading-relaxed">
-                        <strong>Por que é crucial?</strong> É a "manutenção preventiva" dos seus equipamentos! Cada computador passou por um processo de limpeza e verificação para garantir que estejam livres de softwares indesejados e configurados para a máxima proteção, funcionando de forma eficiente e segura, sem brechas para problemas.
-                    </p>
-                </div>
-            </div>
-
-            <p class="text-lg text-gray-700 mt-6 leading-relaxed">
-                Em suma, esses serviços são essenciais para construir uma barreira robusta contra ameaças cibernéticas, garantindo que suas informações, a privacidade de seus clientes e a operação de seu escritório permaneçam seguras e ininterruptas.
+            <p class="intro-text mt-8 fade-blur-effect">
+                Em resumo, esses serviços criam uma barreira digital robusta e moderna, garantindo que suas informações, a privacidade dos seus clientes e a operação do seu escritório permaneçam seguras, ininterruptas e alinhadas com as melhores práticas de TI.
             </p>
         </div>
 
         <!-- Footer Section -->
         <div class="footer-section">
-            <p><strong>Aviso Importante:</strong> A próxima verificação de segurança profunda será efetuada sempre entre 15 e 20 dias a partir de agora, para manter a segurança e a privacidade dos arquivos de propriedade do escritório Youssef & Omena Advogados.</p>
+            <p class="font-semibold text-gray-700">Aviso Importante:</p>
+            <p>A próxima verificação de segurança profunda será efetuada sempre entre 15 e 20 dias a partir de agora, para manter a segurança e a privacidade dos arquivos de propriedade do escritório Youssef & Omena Advogados.</p>
             <p class="mt-4">Atenciosamente,</p>
-            <p class="font-semibold">Guilherme Meireles</p>
-            <p>Analista de Suporte TI</p>
+            <p class="font-bold text-gray-800">Guilherme Meireles</p>
+            <p class="text-gray-600">Analista de Suporte TI</p>
         </div>
     </div>
+
+    <!-- Modal para explicação simplificada (mantido, mas não acessível sem o botão) -->
+    <div id="explanationModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeModal()">
+                &times;
+            </button>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Explicação Simplificada ✨</h3>
+            <div id="explanationText" class="text-gray-700 text-lg mb-4"></div>
+            <div id="loadingSpinner" class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        // As funções e elementos relacionados à API Gemini e ao modal foram mantidos,
+        // mas não serão ativados sem o botão correspondente.
+        const explanationModal = document.getElementById('explanationModal');
+        const explanationText = document.getElementById('explanationText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        function showModal() {
+            explanationModal.classList.remove('hidden');
+            explanationModal.classList.add('show');
+        }
+
+        function closeModal() {
+            explanationModal.classList.remove('show');
+            explanationModal.classList.add('hidden');
+            explanationText.innerHTML = '';
+            loadingSpinner.classList.remove('show');
+        }
+
+        function showLoading() {
+            explanationText.innerHTML = '';
+            loadingSpinner.classList.add('show');
+        }
+
+        function hideLoading() {
+            loadingSpinner.classList.remove('show');
+        }
+
+        // A função explainServiceSimply não será chamada sem o botão.
+        // Ela foi mantida aqui caso você deseje reativá-la no futuro.
+        async function explainServiceSimply(serviceDescription) {
+            showModal();
+            showLoading();
+
+            try {
+                let chatHistory = [];
+                const prompt = `Explique de forma muito simples e em linguagem acessível para um usuário final não-técnico o seguinte serviço de TI, focando no 'porquê' ele é importante para a segurança e operação de um escritório de advocacia: "${serviceDescription}"`;
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    explanationText.innerHTML = text;
+                } else {
+                    explanationText.innerHTML = "Não foi possível gerar a explicação. Tente novamente.";
+                    console.error("Estrutura de resposta inesperada da API Gemini:", result);
+                }
+            } catch (error) {
+                explanationText.innerHTML = "Ocorreu um erro ao conectar com o serviço de IA. Por favor, tente novamente mais tarde.";
+                console.error("Erro ao chamar a API Gemini:", error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // --- JavaScript para o efeito Fade In/Blur ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null, // Observa o viewport
+                rootMargin: '0px',
+                threshold: 0.1 // 10% do elemento visível para ativar
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Para que a animação ocorra apenas uma vez
+                    }
+                });
+            }, observerOptions);
+
+            // Observa o texto de introdução
+            const introTextElements = document.querySelectorAll('.intro-text');
+            introTextElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Observa cada cartão de serviço
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Expondo as funções para o escopo global (se necessário para outros elementos)
+        window.closeModal = closeModal;
+    </script>
 </body>
 </html>
